@@ -1,10 +1,16 @@
 # Quiet TV 动态天气组件
 
-本仓库包含 QuietTV 可选组件的资源和打包工具。动态天气组件 1.0.0 使用独立 `weather-v1.0.0` 标签发布，主程序安装包继续在 `BeatsAD/quiet-tv` 管理。没有 QuietTV 2.0 主程序源码或 APK。
+本仓库包含 QuietTV 可选组件的资源、打包工具和 [Android 组件下载接入代码](client/android/README.md)。动态天气组件 1.0.0 使用独立 `weather-v1.0.0` 标签发布，主程序安装包继续在 `BeatsAD/quiet-tv` 管理。这里不包含桌面界面、完整主程序工程或 APK。
 
 ## 使用
 
 组件是天气渲染资源 ZIP，不能直接安装为 Android 应用。需要支持 hostApi1、内置此组件签名公钥并使用独立天气下载地址的 QuietTV 电视客户端。电视须满足 Android 5.0 / API21、GLES3 和非低内存设备条件，实际效果取决于设备 GPU 与固件。下载和校验完成后，用户再选择动态天气壁纸。
+
+## 客户端下载
+
+Android 接入代码已同步镜像切换、有限重试和 ZIP 断点续传。组件清单和 ZIP 共用主程序的镜像顺序：`ghfast.top` → `gh-proxy.com` → `v4.gh-proxy.org` → GitHub 原站；镜像失败后依次切换，仍保留签名清单、防回退、ZIP 和逐文件 SHA-256 校验。
+
+这项能力由客户端执行。旧客户端需要升级后才能使用；更新组件资源本身不会改变旧客户端的下载方式。当前天气资源仍为 1.0.0，现有标签、附件、清单和公钥保持不变。接入方法及验证边界见 [Android 接入说明](client/android/README.md)。
 
 ## 构建
 

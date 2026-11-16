@@ -1,0 +1,18 @@
+{
+  "source": "QuietTV component client",
+  "sourceCommit": "90120c09da9182a06106c18d8fb6d097f14b1b94",
+  "verifiedHostVersion": "2.0.0",
+  "verifiedHostBuild": 626,
+  "componentHostApi": 1,
+  "files": {
+    "src/main/java/home/quiet/components/DownloadSources.java": "2f598e05151fdfc17b909f7966487b06fd74a6cfdb5b58e75039036950cbd76b",
+    "src/main/java/home/quiet/components/ComponentTransfer.java": "c26baa92a3224167a509747cada83f408e0216d32e55776c6c7197ef4458d7aa",
+    "src/main/java/home/quiet/components/ComponentRepository.java": "3fb3f725a4f1fe3817f9e0de1bcf3a4239d97e4fbc9c1222c5e6e50221831745",
+    "src/main/java/home/quiet/components/ComponentFiles.java": "ee3ca617a983c781838d8542f6e6a793779d49b582eb252da9e224b5ff86d6f7",
+    "src/main/java/home/quiet/components/ComponentManifest.java": "201695405a73512b222fe0c54eddca784002f21fde30466e69c802b89448ea11"
+  },
+  "publicKey": {
+    "path": "app/src/main/assets/components/public-key.der",
+    "sha256": "e8e37e31030fb59a5592404ba955437ba0d6025e47a3c26fc2578faad3e38112"
+  }
+}
