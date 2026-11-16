@@ -1,0 +1,38 @@
+name: Validate
+on:
+  pull_request:
+  push:
+    branches: [main]
+permissions:
+  contents: read
+jobs:
+  validate:
+    name: Validate
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+      - name: Verify reproducible weather archive
+        shell: bash
+        run: |
+          python3 scripts/build_components.py pack --kind weather --target tv --version 1.0.0 --release-tag weather-v1.0.0 --output output/check-one
+          python3 scripts/build_components.py pack --kind weather --target tv --version 1.0.0 --release-tag weather-v1.0.0 --output output/check-two
+          python3 - <<'PYCODE'
+          import hashlib, json, zipfile
+          from pathlib import Path
+          first = Path('output/check-one/QuietTV_tv_weather_1.0.0.zip')
+          second = Path('output/check-two/QuietTV_tv_weather_1.0.0.zip')
+          artifact = json.loads(first.with_suffix('.json').read_text())
+          assert first.read_bytes() == second.read_bytes()
+          assert artifact['url'].startswith('https://github.com/BeatsAD/quiet-tv-components/releases/download/weather-v1.0.0/')
+          assert artifact['bytes'] == first.stat().st_size
+          assert artifact['sha256'] == hashlib.sha256(first.read_bytes()).hexdigest()
+          with zipfile.ZipFile(first) as archive:
+              assert archive.testzip() is None
+              assert set(archive.namelist()) == {entry['name'] for entry in artifact['files']}
+              for entry in artifact['files']:
+                  data = archive.read(entry['name'])
+                  assert len(data) == entry['bytes']
+                  assert hashlib.sha256(data).hexdigest() == entry['sha256']
+                  assert data == Path('app/src/main/assets/weather-gpu', entry['name']).read_bytes()
+          print('PASS: reproducible archive, signed-catalog input metadata, resource sizes and hashes')
+          PYCODE
